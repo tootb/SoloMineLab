@@ -1,4 +1,4 @@
-# SoloMineLab — Bitaxe & NerdQaxe Native Stratum V2 Solo Mining Guide
+# SoloMineLab - Bitaxe & NerdQaxe Native Stratum V2 Solo Mining Guide
 
 Official public setup guide for connecting **Bitaxe (AxeOS v2.14.0+)**, **NerdQaxe (NerdOS v1.0.37+)**, and standard SHA-256 / Scrypt ASICs to **[SoloMineLab](https://solominelab.com/)**.
 
