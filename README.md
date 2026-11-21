@@ -1,6 +1,6 @@
 # SoloMineLab — Bitaxe & NerdQaxe Native Stratum V2 Solo Mining Guide
 
-Official open-source setup guide for connecting **Bitaxe (AxeOS v2.14.0+)**, **NerdQaxe (NerdOS v1.0.37+)**, and standard SHA-256 / Scrypt ASICs to **[SoloMineLab](https://solominelab.com/)**.
+Official public setup guide for connecting **Bitaxe (AxeOS v2.14.0+)**, **NerdQaxe (NerdOS v1.0.37+)**, and standard SHA-256 / Scrypt ASICs to **[SoloMineLab](https://solominelab.com/)**.
 
 * **Main Website:** [https://solominelab.com/](https://solominelab.com/)
 * **Unified Mining Guide:** [https://solominelab.com/mining-guide](https://solominelab.com/mining-guide)
@@ -22,11 +22,12 @@ Official open-source setup guide for connecting **Bitaxe (AxeOS v2.14.0+)**, **N
 | **Merged LTC + DOGE** | Stratum V1 (Dual-Coinbase) | `stratum+tcp://ltc.solominelab.com:3336` | `YOUR_LTC_WALLET.worker1` | `doge=YOUR_DOGE_WALLET` | **0.2%** |
 | **Dogecoin (DOGE) Solo** | Stratum V1 (TCP, no LTC wallet) | `stratum+tcp://doge.solominelab.com:3337` | `YOUR_DOGE_WALLET.worker1` | `x` | **0.2%** |
 
-### Native Stratum V2 Authority Public Key (Noise NX)
+### Native Stratum V2 Authority Public Keys (Noise NX)
 
-Both Bitcoin (`btc.solominelab.com:3338`) and Bitcoin Cash (`bch.solominelab.com:3339`) share the same SV2 Authority Public Key:
+Each coin uses its own independent SV2 Authority Public Key in production:
 
-* **BTC & BCH Auth Key:** `9bnBU6uuuXam8hGfkkkiAFH763q3AEKmBZy2vihPekjM5Md4hLR`
+* **BTC Solo (`btc.solominelab.com:3338`):** `9bnBU6uuuXam8hGfkkkiAFH763q3AEKmBZy2vihPekjM5Md4hLR`
+* **BCH Solo (`bch.solominelab.com:3339`):** `9b2X5AM1xH8pLER84gTtHsA216LmkgfgQA1GyXENcMxujRJC8XZ`
 
 > Always verify live port status and current keys at [https://solominelab.com/docs?protocol=v2](https://solominelab.com/docs?protocol=v2) and [https://solominelab.com/mining-guide](https://solominelab.com/mining-guide).
 
@@ -39,7 +40,7 @@ No `stratum2+tcp://` prefix or local proxy is needed on Bitaxe/NerdQaxe.
 1. Open your Bitaxe dashboard (`http://<BITAXE_LOCAL_IP>`) and go to **Settings → Pool Settings**.
 2. Set Protocol to **Stratum V2 + Extended Channels** and configure your **Primary Pool**:
    * **BTC Solo:** Host `btc.solominelab.com` | Port `3338` | SV2 Authority Pubkey `9bnBU6uuuXam8hGfkkkiAFH763q3AEKmBZy2vihPekjM5Md4hLR` | User `bc1qYOUR_BTC_WALLET.bitaxe1` | Pass `x`
-   * **BCH Solo:** Host `bch.solominelab.com` | Port `3339` | SV2 Authority Pubkey `9bnBU6uuuXam8hGfkkkiAFH763q3AEKmBZy2vihPekjM5Md4hLR` | User `bitcoincash:YOUR_CASHADDR.bitaxe1` *(include `bitcoincash:`)* | Pass `x`
+   * **BCH Solo:** Host `bch.solominelab.com` | Port `3339` | SV2 Authority Pubkey `9b2X5AM1xH8pLER84gTtHsA216LmkgfgQA1GyXENcMxujRJC8XZ` | User `bitcoincash:YOUR_CASHADDR.bitaxe1` *(include `bitcoincash:`)* | Pass `x`
 3. *(Recommended)* Set your **Fallback Pool** to Stratum V1 (`btc.solominelab.com:3333` for BTC or `bch.solominelab.com:3334` for BCH) using the same wallet username and password `x`.
 4. Click **Save** and **Restart**.
 
@@ -50,7 +51,7 @@ No `stratum2+tcp://` prefix or local proxy is needed on Bitaxe/NerdQaxe.
 1. Open NerdOS (`http://<NERDQAXE_LOCAL_IP>`) and navigate to **Settings → Pool Configuration**.
 2. Select **Stratum V2 + Extended Channels** and enter:
    * **BTC Solo:** Host `btc.solominelab.com` | Port `3338` | Auth Key `9bnBU6uuuXam8hGfkkkiAFH763q3AEKmBZy2vihPekjM5Md4hLR` | User `bc1qYOUR_BTC_WALLET.nerdqaxe1` | Pass `x`
-   * **BCH Solo:** Host `bch.solominelab.com` | Port `3339` | Auth Key `9bnBU6uuuXam8hGfkkkiAFH763q3AEKmBZy2vihPekjM5Md4hLR` | User `bitcoincash:YOUR_CASHADDR.nerdqaxe1` | Pass `x`
+   * **BCH Solo:** Host `bch.solominelab.com` | Port `3339` | Auth Key `9b2X5AM1xH8pLER84gTtHsA216LmkgfgQA1GyXENcMxujRJC8XZ` | User `bitcoincash:YOUR_CASHADDR.nerdqaxe1` | Pass `x`
 3. *(Recommended)* Configure Stratum V1 (`:3333` for BTC / `:3334` for BCH) as your **Fallback Pool**.
 4. Save and reboot. Confirm in the live log that the Noise NX handshake completes and shares are accepted.
 
@@ -65,7 +66,7 @@ SoloMineLab never holds miner funds. Every block template writes the payout dire
 
 For Scrypt merged mining on port `:3336`, **both** Litecoin and Dogecoin generate independent non-custodial coinbase payouts directly to your respective LTC and DOGE wallets.
 
-Full step-by-step audit guide (`bitcoin-cli` & block explorer verification): **[`docs/verify-non-custodial-coinbase.md`](docs/verify-non-custodial-coinbase.md)**
+Full step-by-step non-custodial payout details: **[https://solominelab.com/mining-guide#non-custodial](https://solominelab.com/mining-guide#non-custodial)**
 
 ---
 
